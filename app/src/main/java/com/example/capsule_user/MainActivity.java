@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import com.example.capsule_user.Login.DescActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int splash_screen_timer = 2000;

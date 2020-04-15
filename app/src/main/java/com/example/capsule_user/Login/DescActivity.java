@@ -1,4 +1,4 @@
-package com.example.capsule_user;
+package com.example.capsule_user.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.capsule_user.R;
 
 public class DescActivity extends AppCompatActivity {
 

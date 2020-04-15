@@ -1,4 +1,4 @@
-package com.example.capsule_user;
+package com.example.capsule_user.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.capsule_user.MainActivity;
+import com.example.capsule_user.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity {

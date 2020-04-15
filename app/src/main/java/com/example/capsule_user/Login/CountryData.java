@@ -1,4 +1,4 @@
-package com.example.capsule_user;
+package com.example.capsule_user.Login;
 
 public class CountryData {
     public static final String[] countryNames = {"Afghanistan", "Albania",
