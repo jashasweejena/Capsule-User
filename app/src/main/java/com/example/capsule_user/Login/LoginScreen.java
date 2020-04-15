@@ -2,6 +2,7 @@ package com.example.capsule_user.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,13 +30,14 @@ public class LoginScreen extends AppCompatActivity {
 
         spinner = findViewById(R.id.spinnerCountries);
         spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames));
+        spinner.setSelection(79); //Set default location to India
 
         editText = findViewById(R.id.editTextPhone);
 
         button_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
+                String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
 
                 String number = editText.getText().toString().trim();
 
