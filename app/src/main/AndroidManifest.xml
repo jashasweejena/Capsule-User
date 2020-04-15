@@ -12,6 +12,7 @@
         <activity android:name=".Login.LoginScreen"></activity>
         <activity android:name=".Login.DescActivity"/>
         <activity android:name=".Login.VerifyPhoneActivity"/>
+        <activity android:name=".Login.ProfileActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
