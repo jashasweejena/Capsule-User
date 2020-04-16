@@ -2,10 +2,12 @@ package com.example.capsule_user.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.capsule_user.Database.DatabaseRead;
 import com.example.capsule_user.MainActivity;
 import com.example.capsule_user.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +18,9 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Intent intent = new Intent(this, DatabaseRead.class);
+        startActivity(intent);
 
         findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener() {
             @Override

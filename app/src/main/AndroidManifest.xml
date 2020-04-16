@@ -13,6 +13,10 @@
         <activity android:name=".Login.DescActivity"/>
         <activity android:name=".Login.VerifyPhoneActivity"/>
         <activity android:name=".Login.ProfileActivity" />
+        <activity
+            android:name=".Database.DatabaseRead"
+            android:label="@string/title_activity_database_read"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
