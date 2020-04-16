@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.capsule_user.Adapters.RecyclerviewAdapter;
+import com.example.capsule_user.Adapters.DatabaseRecyclerviewAdapter;
 import com.example.capsule_user.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
@@ -45,7 +45,7 @@ public class DatabaseRead extends AppCompatActivity {
         filter().observe(this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(ArrayList<String> strings) {
-                rv.setAdapter(new RecyclerviewAdapter(strings, DatabaseRead.this));
+                rv.setAdapter(new DatabaseRecyclerviewAdapter(strings, DatabaseRead.this));
             }
         });
 

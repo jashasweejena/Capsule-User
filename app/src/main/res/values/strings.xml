@@ -9,4 +9,6 @@
     <string name="enter_phone_number">Enter your phone number</string>
     <string name="enter_code_manually">If not entered automatically, you can enter manually as well</string>
     <string name="title_activity_database_read">DatabaseRead</string>
+    <string name="title_activity_shop_details">ShopDetails</string>
+    <string name="shop_name">shop_name</string>
 </resources>
