@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textView1"
         android:layout_centerHorizontal="true"
-        android:digits="0123456789"
+        android:inputType="number"
         android:hint="@string/enter_code"
         android:maxLength="6" />
 
