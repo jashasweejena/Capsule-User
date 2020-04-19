@@ -1,6 +1,7 @@
 package com.example.capsule_user.Database;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.example.capsule_user.Adapters.DatabaseRecyclerviewAdapter;
 import com.example.capsule_user.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +40,7 @@ public class DatabaseRead extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database_read);
 
+        Log.d(TAG, "onCreate: " + FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() + " " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         initialize();
 
         rv = findViewById(R.id.recyclerview);
@@ -64,7 +67,6 @@ public class DatabaseRead extends AppCompatActivity {
     private void initialize() {
         FirebaseApp.initializeApp(this);
         database = FirebaseDatabase.getInstance();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         myRef = FirebaseDatabase.getInstance().getReference();
     }
 
