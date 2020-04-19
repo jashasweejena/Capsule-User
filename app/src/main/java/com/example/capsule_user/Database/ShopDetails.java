@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.capsule_user.Adapters.ShopRecyclerviewAdapter;
+import com.example.capsule_user.Interfaces.OnItemCheckListener;
+import com.example.capsule_user.Orders.CheckoutActivity;
 import com.example.capsule_user.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,14 +25,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ShopDetails extends AppCompatActivity {
+public class ShopDetails extends AppCompatActivity implements OnItemCheckListener {
     final static String TAG = "ShopDetails";
 
     private RecyclerView rv;
     private DatabaseReference myRef;
     private FirebaseDatabase database;
+    private List<Medicine> selectedMeds;
+    private String shopName;
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,32 +49,42 @@ public class ShopDetails extends AppCompatActivity {
         initialize();
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra(getString(R.string.shop_name));
-        getMeds(name);
+        shopName = intent.getStringExtra(getString(R.string.shop_name));
+        Toast.makeText(this, shopName, Toast.LENGTH_SHORT).show();
+        getMeds();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Log.d(TAG, "onClick:  " + selectedMeds);
+                Toast.makeText(ShopDetails.this, "" + selectedMeds, Toast.LENGTH_SHORT).show();
+
+                //Send the selected list of medicines to CheckoutActivity.class
+                Intent intent = new Intent(ShopDetails.this, CheckoutActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable(getString(R.string.selected_meds_list), (Serializable)selectedMeds);
+                intent.putExtra("BUNDLE", args);
+                intent.putExtra(getString(R.string.parent_database), key);
+                startActivity(intent);
             }
         });
     }
 
-    private void getMeds(String shopName) {
+    private void getMeds() {
         DatabaseReference ref = myRef.child("shop");
         ref.orderByChild("name").equalTo(shopName).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                MedsList m = dataSnapshot.getValue(MedsList.class);
+                key = dataSnapshot.getKey();
 
+                MedsList m = dataSnapshot.getValue(MedsList.class);
                 assert m != null;
                 List<Medicine> medsList = m.getMedicines();
 
 //                TODO: Proper implementation of rv reqd. This is a jugaad.
                 if (rv != null) {
-                    rv.setAdapter(new ShopRecyclerviewAdapter(medsList, ShopDetails.this));
+                    rv.setAdapter(new ShopRecyclerviewAdapter(medsList, ShopDetails.this, ShopDetails.this));
                 } else {
                     Toast.makeText(ShopDetails.this, "Rv null", Toast.LENGTH_SHORT).show();
                     rv = findViewById(R.id.recyclerview_meds);
@@ -106,6 +122,18 @@ public class ShopDetails extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
+
+        selectedMeds = new ArrayList<>();
+    }
+
+    @Override
+    public void onItemCheck(Medicine item) {
+        selectedMeds.add(item);
+    }
+
+    @Override
+    public void onItemUncheck(Medicine item) {
+        selectedMeds.remove(item);
     }
 
 }

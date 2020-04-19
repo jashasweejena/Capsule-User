@@ -1,11 +1,27 @@
 package com.example.capsule_user.Database;
 
-public class Medicine {
+import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
+
+public class Medicine implements Serializable {
     private String desc;
     private int price;
     private int qty;
+    private boolean isChecked;
+
 
     public Medicine() {
+    }
+
+    @Exclude
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    @Exclude
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public String getDesc() {
