@@ -3,6 +3,9 @@ package com.example.capsule_user.Database;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -63,13 +66,31 @@ public class ShopDetails extends AppCompatActivity implements OnItemCheckListene
                 //Send the selected list of medicines to CheckoutActivity.class
                 Intent intent = new Intent(ShopDetails.this, CheckoutActivity.class);
                 Bundle args = new Bundle();
-                args.putSerializable(getString(R.string.selected_meds_list), (Serializable)selectedMeds);
+                args.putSerializable(getString(R.string.selected_meds_list), (Serializable) selectedMeds);
                 intent.putExtra("BUNDLE", args);
                 intent.putExtra(getString(R.string.parent_database), key);
                 startActivity(intent);
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                getMeds();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void getMeds() {
         DatabaseReference ref = myRef.child("shop");
@@ -83,11 +104,15 @@ public class ShopDetails extends AppCompatActivity implements OnItemCheckListene
                 List<Medicine> medsList = m.getMedicines();
 
 //                TODO: Proper implementation of rv reqd. This is a jugaad.
+                ShopRecyclerviewAdapter adapter = new ShopRecyclerviewAdapter(medsList, ShopDetails.this, ShopDetails.this);
                 if (rv != null) {
-                    rv.setAdapter(new ShopRecyclerviewAdapter(medsList, ShopDetails.this, ShopDetails.this));
+                    rv.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(ShopDetails.this, "Rv null", Toast.LENGTH_SHORT).show();
                     rv = findViewById(R.id.recyclerview_meds);
+                    rv.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
                 assert m != null;
                 Log.d(TAG, "onChildAdded: " + m.getMedicines().get(0).getDesc());
@@ -135,5 +160,6 @@ public class ShopDetails extends AppCompatActivity implements OnItemCheckListene
     public void onItemUncheck(Medicine item) {
         selectedMeds.remove(item);
     }
+
 
 }

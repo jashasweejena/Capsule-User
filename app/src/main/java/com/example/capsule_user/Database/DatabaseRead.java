@@ -2,6 +2,9 @@ package com.example.capsule_user.Database;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,18 +46,28 @@ public class DatabaseRead extends AppCompatActivity {
         Log.d(TAG, "onCreate: " + FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() + " " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         initialize();
 
-        rv = findViewById(R.id.recyclerview);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        filter().observe(this, new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                rv.setAdapter(new DatabaseRecyclerviewAdapter(strings, DatabaseRead.this));
-            }
-        });
+        refresh();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_refresh:
+                refresh();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initialize() {
@@ -112,5 +125,18 @@ public class DatabaseRead extends AppCompatActivity {
         });
         return mutableStrings;
 
+    }
+
+    private void refresh(){
+        rv = findViewById(R.id.recyclerview);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        filter().observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> strings) {
+                DatabaseRecyclerviewAdapter adapter = new DatabaseRecyclerviewAdapter(strings, DatabaseRead.this);
+                rv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
