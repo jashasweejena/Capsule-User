@@ -1,5 +1,6 @@
 package com.example.capsule_user.Database;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.capsule_user.Adapters.DatabaseRecyclerviewAdapter;
+import com.example.capsule_user.Orders.CurrentOrders;
 import com.example.capsule_user.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
@@ -65,6 +67,13 @@ public class DatabaseRead extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.action_refresh:
                 refresh();
+                break;
+
+
+            case R.id.action_orders:{
+                Intent intent = new Intent(this, CurrentOrders.class);
+                startActivity(intent);
+            }
         }
 
         return super.onOptionsItemSelected(item);

@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="Refresh"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_orders"
+        android:title="Your Orders"
+        app:showAsAction="ifRoom"/>
 </menu>
