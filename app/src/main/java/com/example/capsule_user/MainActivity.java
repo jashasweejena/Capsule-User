@@ -11,7 +11,7 @@ import com.example.capsule_user.Login.DescActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int splash_screen_timer = 2000;
+    public static final int splash_screen_timer = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
