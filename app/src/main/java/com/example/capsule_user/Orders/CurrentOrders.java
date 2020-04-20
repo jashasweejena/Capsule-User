@@ -5,12 +5,17 @@ import android.os.Bundle;
 
 import com.example.capsule_user.Database.Order;
 import com.example.capsule_user.Location.LocationModel;
+import com.example.capsule_user.Location.MapsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.util.Log;
 import android.view.View;
@@ -47,25 +52,25 @@ public class CurrentOrders extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        uid = FirebaseAuth.getInstance().getUid();
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(String.format("user/%s", uid));
-
-        trackChanges();
 
 
     }
 
-    private void trackChanges() {
+    private MutableLiveData<String> trackChanges() {
+        final MutableLiveData<String> mutableLiveData = new MutableLiveData<>();
+
         DatabaseReference ref = myRef.child("location");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 LocationModel loc = dataSnapshot.getValue(LocationModel.class);
+                String locString;
+                locString = String.format(Locale.ENGLISH, "%f:%f", loc.getLatitude(), loc.getLongitude());
 
-                Toast.makeText(CurrentOrders.this, String.format(Locale.ENGLISH, "%f : %f", loc.getLatitude(), loc.getLongitude()), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onDataChange: " + String.format("%f : %f", loc.getLatitude(), loc.getLongitude()));
+                Log.d(TAG, "onDataChange: " + locString);
+
+                mutableLiveData.postValue(locString);
 
             }
 
@@ -75,6 +80,15 @@ public class CurrentOrders extends AppCompatActivity {
             }
         });
 
+        return mutableLiveData;
+
+    }
+
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

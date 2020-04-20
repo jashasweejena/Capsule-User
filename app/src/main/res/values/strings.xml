@@ -15,4 +15,5 @@
     <string name="selected_meds_list">SELECTED_MEDS_KEY</string>
     <string name="parent_database">PARENT_KEY</string>
     <string name="title_activity_current_orders">CurrentOrders</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

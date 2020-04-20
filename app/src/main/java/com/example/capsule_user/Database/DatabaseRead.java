@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.capsule_user.Adapters.DatabaseRecyclerviewAdapter;
+import com.example.capsule_user.Location.MapsActivity;
 import com.example.capsule_user.Orders.CurrentOrders;
 import com.example.capsule_user.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -71,7 +72,7 @@ public class DatabaseRead extends AppCompatActivity {
 
 
             case R.id.action_orders:{
-                Intent intent = new Intent(this, CurrentOrders.class);
+                Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
             }
         }
